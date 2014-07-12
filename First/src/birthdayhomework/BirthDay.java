@@ -33,26 +33,26 @@ public class BirthDay {
 		
 	
 		if(m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12){ // 31일까지 있는 달이면
-			if(d >= 0 && d <= 31)
+			if(d >= 1 && d <= 31)
 				return true;
 			else
 				return false;
 		}
 		else if(m == 4 || m == 6 || m == 9 || m == 11){ // 30일까지 있는 달이면
-			if(d >= 0 && d <= 30)
+			if(d >= 1 && d <= 30)
 				return true;
 			else
 				return false;
 		}
 		else if(m == 2){ // 2월이면
 			if((y % 4) == 0 && (y % 100) != 0 || (y % 400) == 0){ // 윤년이면
-				if(d >= 0 && d <= 29) // 29일까지 가능
+				if(d >= 1 && d <= 29) // 29일까지 가능
 					return true;
 				else
 					return false;
 			}
 			else{ // 윤년이 아니면
-				if(d >= 0 && d <= 28)
+				if(d >= 1 && d <= 28)
 					return true;
 				else
 					return false;
