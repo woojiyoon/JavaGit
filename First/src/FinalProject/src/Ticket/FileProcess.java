@@ -6,11 +6,14 @@ import java.io.*;
 
 
 public class FileProcess {
+	
 	private ArrayList<CustomerInfo> CustomerInfoList;	// 고객 인스턴스를 담을 arrayList
 	public String fileName;	// 읽어들일 csv, xls 파일 경로 변수
 	BufferedReader br = null;
 	String line = "";	// readLine()을 담을 변수
 	String[] afterSplit;
+	
+	ShortPath shortPath;
 	
 	public FileProcess(String fileName) throws IOException {
 		CustomerInfoList = new ArrayList<CustomerInfo>();
@@ -35,11 +38,65 @@ public class FileProcess {
 		customerinfo.setTimeOfCustomerTicketing(Integer.parseInt(str[3]));			// 고객의 티켓팅 소요시간
 		customerinfo.setNameOfDepartureCity(str[4]);								// 출발역
 		customerinfo.setNameOfArrivalCity(str[5]);									// 도착역
-	
+		
+		// 출발지, 도착지 정보를 이용해 Dijkstra 알고리즘을 돌려서 나온 최소 경로 값을(최소이동시간) set 하기
+		customerinfo.setTimeDurationOfTrain(shortPathProcess(str[4], str[5], Define.TotalNumberOfCity));
+		
 		CustomerInfoList.add(customerinfo);
 		
 	}
 	
+	public int shortPathProcess(String start, String destination, int totalNumberOfCity) {
+		
+		int tempStart = -1;
+		int tempDestination = -1;
+		int minValueOfPath = -1;
+		
+		if(start.equals("Seoul")) 
+			tempStart = Define.Seoul;		// 0
+		else if(start.equals("Chuncheon"))
+			tempStart = Define.Chuncheon;	// 1
+		else if(start.equals("Wonju"))
+			tempStart = Define.Wonju;		// 2
+		else if(start.equals("Asan"))
+			tempStart = Define.Asan;		// 3
+		else if(start.equals("Kyungju"))
+			tempStart = Define.Gyeongju;	// 4
+		else if(start.equals("Deajeon"))
+			tempStart = Define.Deajeon;		// 5
+		else if(start.equals("Gwangju"))
+			tempStart = Define.Gwangju;		// 6
+		else
+			tempStart = -1;
+		
+		
+		if(destination.equals("Seoul")) 
+			tempDestination = Define.Seoul;
+		else if(destination.equals("Chuncheon"))
+			tempDestination = Define.Chuncheon;
+		else if(destination.equals("Wonju"))
+			tempDestination = Define.Wonju;
+		else if(destination.equals("Asan"))
+			tempDestination = Define.Asan;
+		else if(destination.equals("Kyungju"))
+			tempDestination = Define.Gyeongju;
+		else if(destination.equals("Deajeon"))
+			tempDestination = Define.Deajeon;
+		else if(destination.equals("Gwangju"))
+			tempDestination = Define.Gwangju;
+		else
+			tempDestination = -1;
+		
+		if(tempStart == -1 || tempDestination == -1) {
+			System.out.println("잘못입력 된 도시 이름 입니다.");
+			return 0;
+		}
+		else {
+			shortPath = new ShortPath();	// 인스턴스 생성
+			minValueOfPath = shortPath.shortestPath(tempStart, tempDestination, Define.TotalNumberOfCity);
+			return minValueOfPath;
+		}
+	}
 	
 	public void CustomerInfoListAllDisplay() {
 		Iterator<CustomerInfo> ir = CustomerInfoList.iterator();
