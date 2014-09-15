@@ -3,6 +3,7 @@ package Ticket;
 /********************************************************************
  * 
   시작점(start)에서 도착점(destination)까지의 최소경로 값을 리턴해 주는 클래스
+  최소경로를 구하는 방법은 Dijkstra 알고리즘을 이용함.
   
  *******************************************************************/
 
@@ -22,8 +23,8 @@ public class ShortPath {
 		min = INT_MAX;
 		minPosition = -1;
 		for(i = 0; i < n; i++) {
-			if(distance[i] < min && found[i] == 0) {
-				min = distance[i];
+			if(distance[i] < min && found[i] == 0) {	// 방문한 정점이 아니라면
+				min = distance[i];						// 최소경로 갱신
 				minPosition = i;
 				}
 		}
