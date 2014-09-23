@@ -1,4 +1,4 @@
-package Ticket;
+package ticket;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -7,7 +7,6 @@ import java.io.*;
 
 public class FileProcess {
 	
-	private ArrayList<CustomerInfo> CustomerInfoList;	// 고객 인스턴스를 담을 arrayList
 	public String fileName;	// 읽어들일 csv, xls 파일 경로 변수
 	BufferedReader br = null;
 	String line = "";	// readLine()을 담을 변수
@@ -15,20 +14,20 @@ public class FileProcess {
 	
 	ShortPath shortPath;
 	
-	public FileProcess(String fileName) throws IOException {
-		CustomerInfoList = new ArrayList<CustomerInfo>();
+	public FileProcess(String fileName, QueueStruct qs) throws IOException {
 		
 		br = new BufferedReader(new FileReader(new File(fileName)));
 		line = br.readLine();	// 첫 라인은 그냥 버리고
 		
 		while((line = br.readLine()) != null) {
 			afterSplit = line.split(",");
-			insertCustomerInfo(afterSplit);
+			//CustomerInfoList.add(insertCustomerInfo(afterSplit));
+			qs.CustomerOriginalDataQueue.add(insertCustomerInfo(afterSplit));
 		}
 			
 	}
 	
-	public void insertCustomerInfo(String[] str) {
+	public CustomerInfo insertCustomerInfo(String[] str) {
 		CustomerInfo customerinfo = new CustomerInfo();
 		
 		// 멤버변수 셋팅 순서 : id,고객이름,역 도착시간, 티케팅소요시간, 출발역, 도착역
@@ -42,9 +41,21 @@ public class FileProcess {
 		// 출발지, 도착지 정보를 이용해 Dijkstra 알고리즘을 돌려서 나온 최소 경로 값을(최소이동시간) set 하기
 		customerinfo.setTimeDurationOfTrain(shortPathProcess(str[4], str[5], Define.TotalNumberOfCity));
 		
-		CustomerInfoList.add(customerinfo);
+		return customerinfo;
+		//CustomerInfoList.add(customerinfo);
 		
 	}
+	
+	
+	
+	
+	
+	
+	/**************************************************************************
+	 
+	 고객의 original 정보에서 출발역과 도착역 정보를 "Dijkstra" 알고리즘에 넣어서 최단 거리를 구하는 부분
+	 
+	 *************************************************************************/
 	
 	public int shortPathProcess(String start, String destination, int totalNumberOfCity) {
 		
@@ -97,12 +108,13 @@ public class FileProcess {
 			return minValueOfPath;
 		}
 	}
-	
+	/*
 	public void CustomerInfoListAllDisplay() {
 		Iterator<CustomerInfo> ir = CustomerInfoList.iterator();
 		while(ir.hasNext()) {
 			System.out.println(ir.next());
 		}
 	}
+	*/
 	
 }

@@ -1,4 +1,4 @@
-package Ticket;
+package ticket;
 
 public class CustomerInfo {
 	
@@ -12,8 +12,9 @@ public class CustomerInfo {
 	private String nameOfDepartureCity;			// 출발 도시 이름
 	private String nameOfArrivalCity;			// 도착 도시 이름
 	private int timeOfCustomerArrivalAtStation;	// 고객이 역에 도착한 시간
-	private int timeOfCustomerTicketing;		// 고객이 티케팅 하는 데 소요된 시간
-	private int timeOnStandbyOfTicket;			// 고객의 실제 티켓팅 대기시간(티케팅전략에 따라)
+	private int timeOfCustomerTicketing;		// 고객이 티케팅 하는 데 소요할 시간(실제 값)
+	public int tempTimeOfCustomerTicketing;		// 고객이 티케팅 하는 데 소요할 시간(임시 값)
+	private int timeOnStandbyOfTicket;			// 고객의 실제 티켓팅 대기시간(티케팅전략에 따라, 래디 큐에 머문시간)
 	private int timeOnStandbyOfTrain;			// 고객의 열차 대기시간(열차를 타고 열차 출발시간까지 대기한 시간)
 	private int timeOnDepartureOfTrain;			// 열차 출발시간(매 3분 마다 출발함)
 	private int timeOnArrivalOfTrain;			// 고객의 열차 도착 시간(출발지~도착지)
@@ -33,12 +34,16 @@ public class CustomerInfo {
 	
 	@Override
 	public String toString() {
-		return this.getIdOfCustomer() + ":" + this.getNameOfCustomer()
-				+ ":" + this.getTimeOfCustomerArrivalAtStation()
-				+ ":" + this.getTimeOfCustomerTicketing()
-				+ ":" + this.getNameOfDepartureCity()
-				+ ":" + this.getNameOfArrivalCity()
-				+ ":(최소경로=>)" + this.getTimeDurationOfTrain();
+		return this.getIdOfCustomer() + ":" + this.getNameOfCustomer()	// id, 이름
+				+ ":" + this.getTimeOfCustomerArrivalAtStation()		// 역 도착시간 (출발지)
+				+ ":" + this.getTimeOfCustomerTicketing()				// 티켓팅 소요할 시간
+				+ ":" + this.getNameOfDepartureCity()					// 출발지 이름
+				+ ":" + this.getNameOfArrivalCity()						// 도착지 이름
+				+ ":(최소경로=>)" + this.getTimeDurationOfTrain()			// 최소 경로 시간
+				+ ">" + this.getTimeOnStandbyOfTicket()					// 티켓팅 대기 시간(프로세스 알고리즘에 의해 대기한 시간)
+				+ ">" + this.getTimeOnStandbyOfTrain()					// 열차 대기 시간
+				+ ">" + this.getTimeOnDepartureOfTrain()				// 열차 출발 시간 (매 3분마다)
+				+ ">" + this.getTimeOnArrivalOfTrain();					// 열차 도착 시간 (열차 출발시간 + 최소경로 시간)	
 	}
 
 
@@ -104,9 +109,10 @@ public class CustomerInfo {
 		return timeOfCustomerTicketing;
 	}
 
-
+	
 	public void setTimeOfCustomerTicketing(int timeOfCustomerTicketing) {
 		this.timeOfCustomerTicketing = timeOfCustomerTicketing;
+		this.tempTimeOfCustomerTicketing = timeOfCustomerTicketing;
 	}
 
 

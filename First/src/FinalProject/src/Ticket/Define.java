@@ -1,4 +1,4 @@
-package Ticket;
+package ticket;
 
 public class Define {
 	
