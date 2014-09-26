@@ -22,7 +22,7 @@ public class TicketStrategyFCFS implements ITicketStrategy{
 	public int iTempSize2;
 	public int iTempSize3;
 	
-	public void FCFSstartToEnd() throws InterruptedException {
+	public void FCFSstartToEnd() throws Exception {
 		
 		iTempSize1 = QueueStruct.CustomerOriginalDataQueue.size();	// 오리지날 데이터에 있는 고객의 총 수
 		iTempSize2 = QueueStruct.TicketProcessingQueue.length;		// 티켓 처리 부스의 총 갯수 (3부스)
@@ -47,8 +47,9 @@ public class TicketStrategyFCFS implements ITicketStrategy{
 			timeNow++;
 		}
 		
-		//QueueStruct.AllDisplayOfQueueInfo(QueueStruct.CustomerReadyforTrainQueue);
-		QueueStruct.AllDisplayOfQueueInfo(QueueStruct.CustomerFinalDataQueue);
+		
+		//QueueStruct.AllDisplayOfQueueInfo(QueueStruct.CustomerFinalDataQueue);
+		QueueStruct.AllWriteOfQueueInfo(QueueStruct.CustomerFinalDataQueue,"FCFSfinalData.csv");
 	}
 	
 	public void sendOriginalCustomerToTicketReadyQueue() {

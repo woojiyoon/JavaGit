@@ -14,7 +14,9 @@ public class FileProcess {
 	
 	ShortPath shortPath;
 	
-	public FileProcess(String fileName, QueueStruct qs) throws IOException {
+	public FileProcess() { }
+	
+	public void CSVFileRead(String fileName) throws IOException {
 		
 		br = new BufferedReader(new FileReader(new File(fileName)));
 		line = br.readLine();	// 첫 라인은 그냥 버리고
@@ -22,9 +24,13 @@ public class FileProcess {
 		while((line = br.readLine()) != null) {
 			afterSplit = line.split(",");
 			//CustomerInfoList.add(insertCustomerInfo(afterSplit));
-			qs.CustomerOriginalDataQueue.add(insertCustomerInfo(afterSplit));
+			QueueStruct.CustomerOriginalDataQueue.add(insertCustomerInfo(afterSplit));
 		}
 			
+	}
+	
+	public void CSVFileWrite(String fileName) {
+		
 	}
 	
 	public CustomerInfo insertCustomerInfo(String[] str) {
@@ -42,7 +48,6 @@ public class FileProcess {
 		customerinfo.setTimeDurationOfTrain(shortPathProcess(str[4], str[5], Define.TotalNumberOfCity));
 		
 		return customerinfo;
-		//CustomerInfoList.add(customerinfo);
 		
 	}
 	

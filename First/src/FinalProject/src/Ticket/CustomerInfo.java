@@ -34,16 +34,17 @@ public class CustomerInfo {
 	
 	@Override
 	public String toString() {
-		return this.getIdOfCustomer() + ":" + this.getNameOfCustomer()	// id, 이름
-				+ ":" + this.getTimeOfCustomerArrivalAtStation()		// 역 도착시간 (출발지)
-				+ ":" + this.getTimeOfCustomerTicketing()				// 티켓팅 소요할 시간
-				+ ":" + this.getNameOfDepartureCity()					// 출발지 이름
-				+ ":" + this.getNameOfArrivalCity()						// 도착지 이름
-				+ ":(최소경로=>)" + this.getTimeDurationOfTrain()			// 최소 경로 시간
-				+ ">" + this.getTimeOnStandbyOfTicket()					// 티켓팅 대기 시간(프로세스 알고리즘에 의해 대기한 시간)
-				+ ">" + this.getTimeOnStandbyOfTrain()					// 열차 대기 시간
-				+ ">" + this.getTimeOnDepartureOfTrain()				// 열차 출발 시간 (매 3분마다)
-				+ ">" + this.getTimeOnArrivalOfTrain();					// 열차 도착 시간 (열차 출발시간 + 최소경로 시간)	
+		return this.getIdOfCustomer() + "," + this.getNameOfCustomer()	// id, 이름
+				+ "," + this.getTimeOfCustomerArrivalAtStation()		// 역 도착시간 (출발지)
+				+ "," + this.getTimeOfCustomerTicketing()				// 티켓팅 소요할 시간
+				+ "," + this.getNameOfDepartureCity()					// 출발지 이름
+				+ "," + this.getNameOfArrivalCity()						// 도착지 이름
+				+ "," + this.getTimeDurationOfTrain()			// 최소 경로 시간
+				+ "," + this.getTimeOnStandbyOfTicket()					// 티켓팅 대기 시간(프로세스 알고리즘에 의해 대기한 시간)
+				+ "," + this.getTimeOnStandbyOfTrain()					// 열차 대기 시간
+				+ "," + this.getTimeOnDepartureOfTrain()				// 열차 출발 시간 (매 3분마다)
+				+ "," + this.getTimeOnArrivalOfTrain()					// 열차 도착 시간 (열차 출발시간 + 최소경로 시간)	
+				+ "\n";	
 	}
 
 

@@ -1,5 +1,6 @@
 package ticket;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -35,4 +36,24 @@ public class QueueStruct {
 		
 	}
 	
+	public static void AllWriteOfQueueInfo(ArrayList<CustomerInfo> al, String fileName) throws Exception {	// 큐에 있는 모든 정보를 CSV 파일로 쓴다.
+		Iterator<CustomerInfo> ir = al.iterator();
+		String source = "";
+		FileWriter fw = new FileWriter(fileName);;
+		BufferedWriter bw = new BufferedWriter(fw);
+		bw.write("ID," + "이름,"+"역 도착시간,"+"티케팅시간,"+"출발역,"+"도착역,"+"최소경로시간,"+"티켓대기시간,"+"열차대기시간,"+"열차출발시간,"+"열차도착시간\n");
+		while(ir.hasNext()) {
+			//System.out.println(ir.next());
+			
+			source = ir.next().toString();
+			//System.out.println(source);
+//			char input[] = new char[source.length()];
+//			source.getChars(0, source.length(), input, 0);
+			
+			
+			bw.write(source);
+			
+		}
+		bw.close();
+	}
 }
