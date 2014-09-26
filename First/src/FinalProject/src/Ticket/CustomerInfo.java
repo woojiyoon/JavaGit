@@ -7,18 +7,18 @@ public class CustomerInfo {
 		고객정보(CustomerInfo)클래스의 멤버 변수들 
 		
 	**************************************************************************/
-	private int idOfCustomer;					// 고객 아이디
-	private String nameOfCustomer;				// 고객이름
-	private String nameOfDepartureCity;			// 출발 도시 이름
-	private String nameOfArrivalCity;			// 도착 도시 이름
-	private int timeOfCustomerArrivalAtStation;	// 고객이 역에 도착한 시간
-	private int timeOfCustomerTicketing;		// 고객이 티케팅 하는 데 소요할 시간(실제 값)
+	public int idOfCustomer;					// 고객 아이디
+	public String nameOfCustomer;				// 고객이름
+	public String nameOfDepartureCity;			// 출발 도시 이름
+	public String nameOfArrivalCity;			// 도착 도시 이름
+	public int timeOfCustomerArrivalAtStation;	// 고객이 역에 도착한 시간
+	public int timeOfCustomerTicketing;		// 고객이 티케팅 하는 데 소요할 시간(실제 값)
 	public int tempTimeOfCustomerTicketing;		// 고객이 티케팅 하는 데 소요할 시간(임시 값)
-	private int timeOnStandbyOfTicket;			// 고객의 실제 티켓팅 대기시간(티케팅전략에 따라, 래디 큐에 머문시간)
-	private int timeOnStandbyOfTrain;			// 고객의 열차 대기시간(열차를 타고 열차 출발시간까지 대기한 시간)
-	private int timeOnDepartureOfTrain;			// 열차 출발시간(매 3분 마다 출발함)
-	private int timeOnArrivalOfTrain;			// 고객의 열차 도착 시간(출발지~도착지)
-	private int timeDurationOfTrain;			// 기차가 달리기 시작해서 도착할 때까지 걸린 순수 이동시간(대기시간 제외, 최소경로로 달린 시간)
+	public int timeOnStandbyOfTicket;			// 고객의 실제 티켓팅 대기시간(티케팅전략에 따라, 래디 큐에 머문시간)
+	public int timeOnStandbyOfTrain;			// 고객의 열차 대기시간(열차를 타고 열차 출발시간까지 대기한 시간)
+	public int timeOnDepartureOfTrain;			// 열차 출발시간(매 3분 마다 출발함)
+	public int timeOnArrivalOfTrain;			// 고객의 열차 도착 시간(출발지~도착지)
+	public int timeDurationOfTrain;			// 기차가 달리기 시작해서 도착할 때까지 걸린 순수 이동시간(대기시간 제외,즉 최소경로로 달린 시간)
 	
 	
 	/************************************************************************
