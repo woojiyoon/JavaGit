@@ -29,7 +29,7 @@ public class TicketStrategyRoundRobin implements ITicketStrategy {
 		}
 		// QueueStruct.AllDisplayOfQueueInfo(QueueStruct.CustomerReadyforTrainQueue);
 		try {
-			QueueStruct.AllWriteOfQueueInfo(QueueStruct.CustomerFinalDataQueue,"RoundRobinfinalData.csv");
+			QueueStruct.AllWriteOfQueueInfo(QueueStruct.CustomerFinalDataQueue,"RoundRobinfinalData6.csv");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -83,7 +83,7 @@ public class TicketStrategyRoundRobin implements ITicketStrategy {
 						}	
 					}
 					else {		// Round-Robin의 시간할당량(3초) 기준에 따른 고객 큐의 티케팅 처리 여부를 적용하는 부분
-						if(timeNow != 0 && (timeNow % 3) == 0) {// 3초가 Time Quantum(시간 할당량)이 된다. = 열차 큐(TrainAtPlatformQueue)에 열차가 출발하는 매 3초마다의 시간	
+						if(timeNow != 0 && (timeNow % 6) == 0) {// 3초가 Time Quantum(시간 할당량)이 된다. = 열차 큐(TrainAtPlatformQueue)에 열차가 출발하는 매 3초마다의 시간	
 							if(QueueStruct.TicketProcessingQueue[i] != null && QueueStruct.TicketProcessingQueue[i].tempTimeOfCustomerTicketing != 0){
 								QueueStruct.CustomerTicketReadyQueue.add(QueueStruct.TicketProcessingQueue[i]);	// 티켓팅 부스에서 티켓처리 하던 고객을 다시 티켓 대기 큐로 보내기(순환 큐의 꼬리로) 
 								QueueStruct.TicketProcessingQueue[i] = null;
@@ -105,13 +105,13 @@ public class TicketStrategyRoundRobin implements ITicketStrategy {
 		}
 		
 		
-		for(int k = 0; k < iTempR2; k++){
-			if(QueueStruct.TicketProcessingQueue[k] != null) {
-				System.out.println(QueueStruct.TicketProcessingQueue[k].getIdOfCustomer() + " : " 
-						+ QueueStruct.TicketProcessingQueue[k].tempTimeOfCustomerTicketing);
-				
-			}
-		}
+//		for(int k = 0; k < iTempR2; k++){
+//			if(QueueStruct.TicketProcessingQueue[k] != null) {
+//				System.out.println(QueueStruct.TicketProcessingQueue[k].getIdOfCustomer() + " : " 
+//						+ QueueStruct.TicketProcessingQueue[k].tempTimeOfCustomerTicketing);
+//				
+//			}
+//		}
 		
 	}
 
