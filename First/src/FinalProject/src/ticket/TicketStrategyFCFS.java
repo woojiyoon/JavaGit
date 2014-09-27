@@ -22,26 +22,21 @@ public class TicketStrategyFCFS implements ITicketStrategy{
 	public int iTempSize2;
 	public int iTempSize3;
 	
-	public void FCFSstartToEnd() throws Exception {
+	public void startToEnd() {
 		
 		iTempSize1 = QueueStruct.CustomerOriginalDataQueue.size();	// 오리지날 데이터에 있는 고객의 총 수
 		iTempSize2 = QueueStruct.TicketProcessingQueue.length;		// 티켓 처리 부스의 총 갯수 (3부스)
+		int timeFinal = QueueStruct.CustomerOriginalDataQueue.get(iTempSize1 - 1).timeOfCustomerArrivalAtStation
+				+ QueueStruct.CustomerOriginalDataQueue.get(iTempSize1 - 1).timeOfCustomerTicketing;		// while 문안에 timeNow 마지막 시간을 결정
 		
 		while(!getOffWork) {
-			System.out.println("timeNow : " + timeNow);
+			//System.out.println("timeNow : " + timeNow);
 			// 여러가지 큐에 대한 작업
 			sendOriginalCustomerToTicketReadyQueue();
 			sendTicketReadyCustomerToTicketProcessingQueue();
 			sendCustomerAtPlatformToGettingOnTrain();
 			
-//			try {
-//				Thread.sleep(3000);
-//			} catch (InterruptedException e) {
-//				
-//				e.printStackTrace();
-//			}
-			
-			if(timeNow == 48)
+			if(timeNow == timeFinal + 5)	// 오리지날 데이터가 다 비워지고, 티켓팅 처리도 끝난뒤 + 5 정도 시간 지나가면 마지막 파이날 데이터까지 가기에 충분하므로...
 				break;
 			// 1초가 지나고
 			timeNow++;
@@ -49,7 +44,11 @@ public class TicketStrategyFCFS implements ITicketStrategy{
 		
 		
 		//QueueStruct.AllDisplayOfQueueInfo(QueueStruct.CustomerFinalDataQueue);
-		QueueStruct.AllWriteOfQueueInfo(QueueStruct.CustomerFinalDataQueue,"FCFSfinalData.csv");
+		try {
+			QueueStruct.AllWriteOfQueueInfo(QueueStruct.CustomerFinalDataQueue,"FCFSfinalData.csv");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void sendOriginalCustomerToTicketReadyQueue() {
@@ -64,14 +63,14 @@ public class TicketStrategyFCFS implements ITicketStrategy{
 				}
 			}
 			else {	// 오리지널 데이터 큐에 고객 데이터를 다 꺼냈고, 이제 데이터가 없다면		// 이 함수는 완전 끝
-				System.out.println("오리지널 큐에 데이터 없음. timeNow :" + timeNow);
+				//System.out.println("오리지널 큐에 데이터 없음. timeNow :" + timeNow);
 				return;
 			}
 		}	
 	}
 	
 	
-	public void sendTicketReadyCustomerToTicketProcessingQueue() throws InterruptedException {
+	public void sendTicketReadyCustomerToTicketProcessingQueue() {	// FCFS(선입선처리 알고리즘)
 		
 		for(int i = 0; i < iTempSize2; i++){
 			if(QueueStruct.TicketProcessingQueue[i] == null) {				// 티켓 처리 부스에 빈 칸이 있으면
@@ -107,6 +106,7 @@ public class TicketStrategyFCFS implements ITicketStrategy{
 			QueueStruct.CustomerTicketReadyQueue.get(j).timeOnStandbyOfTicket += 1;		// 고객의 티켓 대기 시간 1 더하기
 		}
 		
+		/*
 		for(int k = 0; k < iTempSize2; k++){
 			if(QueueStruct.TicketProcessingQueue[k] != null) {
 				System.out.println(QueueStruct.TicketProcessingQueue[k].getIdOfCustomer() + " : " 
@@ -114,8 +114,9 @@ public class TicketStrategyFCFS implements ITicketStrategy{
 				
 			}
 		}
+		*/
 			//Thread.sleep(2000);
-			System.out.println("=======");
+		//	System.out.println("=======");
 		
 	}
 	
@@ -151,7 +152,5 @@ public class TicketStrategyFCFS implements ITicketStrategy{
 			}
 		}
 	}
-	
-	
 	
 }	// end of public class TicketStrategyFCFS
