@@ -4,9 +4,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.io.*;
 
+/****************************************************
+ * 
+ *  파일 프로세스 처리는, 싱글톤으로 만듬.
+ *
+ **************************************************/
+
 
 public class FileProcess {
 	
+	private static FileProcess fp = new FileProcess();
 	public String fileName;	// 읽어들일 csv, xls 파일 경로 변수
 	BufferedReader br = null;
 	String line = "";	// readLine()을 담을 변수
@@ -14,7 +21,13 @@ public class FileProcess {
 	
 	ShortPath shortPath;
 	
-	public FileProcess() { }
+	private FileProcess() { }
+	
+	public static FileProcess getInstance() {
+		if(fp == null)
+			fp = new FileProcess();
+		return fp;
+	}
 	
 	public void CSVFileRead(String fileName) throws IOException {
 		
@@ -30,7 +43,11 @@ public class FileProcess {
 	}
 	
 	public void CSVFileWrite(String fileName) {
-		
+		try {
+			QueueStruct.AllWriteOfQueueInfo(QueueStruct.CustomerFinalDataQueue, fileName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public CustomerInfo insertCustomerInfo(String[] str) {
@@ -113,13 +130,5 @@ public class FileProcess {
 			return minValueOfPath;
 		}
 	}
-	/*
-	public void CustomerInfoListAllDisplay() {
-		Iterator<CustomerInfo> ir = CustomerInfoList.iterator();
-		while(ir.hasNext()) {
-			System.out.println(ir.next());
-		}
-	}
-	*/
 	
 }

@@ -1,5 +1,20 @@
 package ticket;
 
+/****************************************************************
+
+<스케줄링 알고리즘> : Round-Robin Scheduling
+
+=> 라운드 로빈 스케줄링은 프로세스들 사이에 우선순위를 두지 않고, 순서대로 시간 할당량(time quantum)단위로 cpu를 할당하는 할당하는 방식의 스케줄링 알고리즘이다.
+여기에서는 티켓 부스 3개를 cpu로 보고, 티켓 부스에 할당되는 고객들의 티켓팅 처리를 프로세스로 생각한다. 그리고 기차 출발이 3초마다 이루어 지므로 시간 할당량은 3초가 
+가장 적당하고 가설을 세운다.
+
+=> 프로그래밍 중요점 : 티켓팅 대기 큐를 프로세스들의 선입선출(FCFS)큐로 유지한다. 실행 중인 프로세스가 시간 할당량을 초과 하면, 문맥교환(고객 바꾸기)이 일어나고,
+그 실행중이던 프로세스는 티켓팅 대기큐의 꼬리에 넣어진다. 그 후 스케줄러는 티캐팅 대기큐의 가장 앞에 있는 인덱스의 고객을 선택한다.
+
+=> 중요 이론 : 시간 할당량이 너무 크다면 라운드-로빈 스케줄링은 선입선출(FCFS)정책으로 퇴보한다. 경험에 의하면 시간할당량은 전체 cpu의 버스트의 80%보다 커야한다.
+
+****************************************************************/
+
 public class TicketStrategyRoundRobin implements ITicketStrategy {
 
 	private int timeNow = 0;				// 현재 시간(1초씩 상승)
@@ -27,12 +42,8 @@ public class TicketStrategyRoundRobin implements ITicketStrategy {
 			
 			timeNow++;	// 현실 시간 1초 더하기
 		}
-		// QueueStruct.AllDisplayOfQueueInfo(QueueStruct.CustomerReadyforTrainQueue);
-		try {
-			QueueStruct.AllWriteOfQueueInfo(QueueStruct.CustomerFinalDataQueue,"RoundRobinfinalData6.csv");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
+		FileProcess.getInstance().CSVFileWrite("RoundRobinfinalData.csv");	// csv 파일로 쓰기
 	}
 
 	@Override
@@ -48,7 +59,6 @@ public class TicketStrategyRoundRobin implements ITicketStrategy {
 				}
 			}
 			else {	// 오리지널 데이터 큐에 고객 데이터를 다 꺼냈고, 이제 데이터가 없다면		// 이 함수는 완전 끝
-				//System.out.println("오리지널 큐에 데이터 없음. timeNow :" + timeNow);
 				return;
 			}
 		}	
@@ -104,19 +114,10 @@ public class TicketStrategyRoundRobin implements ITicketStrategy {
 			QueueStruct.CustomerTicketReadyQueue.get(j).timeOnStandbyOfTicket += 1;		// 고객의 티켓 대기 시간 1 더하기
 		}
 		
-		
-//		for(int k = 0; k < iTempR2; k++){
-//			if(QueueStruct.TicketProcessingQueue[k] != null) {
-//				System.out.println(QueueStruct.TicketProcessingQueue[k].getIdOfCustomer() + " : " 
-//						+ QueueStruct.TicketProcessingQueue[k].tempTimeOfCustomerTicketing);
-//				
-//			}
-//		}
-		
 	}
 
 	
-	// 여기서 부터 코드는 FCFS랑 같음.
+	
 	@Override
 	public void sendCustomerAtPlatformToGettingOnTrain() {	// ReadyforTrainQueue에 있는 고객 -> TrainAtPlatformQueue로 보내어 기차 태우기(매 3초마다)
 		

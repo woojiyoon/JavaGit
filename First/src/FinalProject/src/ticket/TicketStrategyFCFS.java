@@ -30,7 +30,6 @@ public class TicketStrategyFCFS implements ITicketStrategy{
 				+ QueueStruct.CustomerOriginalDataQueue.get(iTempSize1 - 1).timeOfCustomerTicketing;		// while 문안에 timeNow 마지막 시간을 결정
 		
 		while(!getOffWork) {
-			//System.out.println("timeNow : " + timeNow);
 			// 여러가지 큐에 대한 작업
 			sendOriginalCustomerToTicketReadyQueue();
 			sendTicketReadyCustomerToTicketProcessingQueue();
@@ -42,13 +41,7 @@ public class TicketStrategyFCFS implements ITicketStrategy{
 			timeNow++;
 		}
 		
-		
-		//QueueStruct.AllDisplayOfQueueInfo(QueueStruct.CustomerFinalDataQueue);
-		try {
-			QueueStruct.AllWriteOfQueueInfo(QueueStruct.CustomerFinalDataQueue,"FCFSfinalData.csv");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		FileProcess.getInstance().CSVFileWrite("FCFSfinalData.csv");	// csv 파일로 쓰기
 	}
 	
 	public void sendOriginalCustomerToTicketReadyQueue() {
@@ -63,7 +56,6 @@ public class TicketStrategyFCFS implements ITicketStrategy{
 				}
 			}
 			else {	// 오리지널 데이터 큐에 고객 데이터를 다 꺼냈고, 이제 데이터가 없다면		// 이 함수는 완전 끝
-				//System.out.println("오리지널 큐에 데이터 없음. timeNow :" + timeNow);
 				return;
 			}
 		}	
@@ -105,18 +97,6 @@ public class TicketStrategyFCFS implements ITicketStrategy{
 		for(int j = 0; j < QueueStruct.CustomerTicketReadyQueue.size(); j++) {
 			QueueStruct.CustomerTicketReadyQueue.get(j).timeOnStandbyOfTicket += 1;		// 고객의 티켓 대기 시간 1 더하기
 		}
-		
-		/*
-		for(int k = 0; k < iTempSize2; k++){
-			if(QueueStruct.TicketProcessingQueue[k] != null) {
-				System.out.println(QueueStruct.TicketProcessingQueue[k].getIdOfCustomer() + " : " 
-						+ QueueStruct.TicketProcessingQueue[k].tempTimeOfCustomerTicketing);
-				
-			}
-		}
-		*/
-			//Thread.sleep(2000);
-		//	System.out.println("=======");
 		
 	}
 	

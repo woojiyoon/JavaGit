@@ -43,16 +43,8 @@ public class QueueStruct {
 		BufferedWriter bw = new BufferedWriter(fw);
 		bw.write("ID," + "이름,"+"역 도착시간,"+"티케팅시간,"+"출발역,"+"도착역,"+"최소경로시간,"+"티켓대기시간,"+"열차대기시간,"+"열차출발시간,"+"열차도착시간\n");
 		while(ir.hasNext()) {
-			//System.out.println(ir.next());
-			
-			source = ir.next().toString();
-			//System.out.println(source);
-//			char input[] = new char[source.length()];
-//			source.getChars(0, source.length(), input, 0);
-			
-			
-			bw.write(source);
-			
+			source = ir.next().toString();	
+			bw.write(source);	
 		}
 		bw.close();
 	}
